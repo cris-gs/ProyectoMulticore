@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="icon" href="{% static 'img/play-station.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+    <title>Games</title>
+</head>
+<body> 
+    <h1 class="main_title">Best PS4 games</h1>
+    <main>
+        <section class="cards">
+            {% for game in Games %}
+                <div class="card">
+                    <h2 class="card_title">{{game.titulo}}</h2>
+                    <img src='{{game.imagen}}'>
+                    <div class="card_content">
+                        <h3>Description:</h3>
+                        <p class="description">{{game.descripcion}}</p> 
+                        <h3>Qualification:</h3>
+                        <img class="star" src="{% static 'img/estrella.png' %}">
+                        <p class="qualification">{{game.calificacion}}</p>
+                        <h3>Duration:</h3>
+                        <p>{{game.duracion}}</p>
+                        <div class="price">
+                            <p class="priceGaming">Instant Gaming {{game.precioGaming}}</p>
+                            <p class="priceEbay">Ebay price {{game.precioEbay}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>
