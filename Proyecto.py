@@ -1,7 +1,7 @@
 import requests
 import multiprocessing
 from time import time
-import datetime
+import json
 
 user_agent = {'User-agent':'Mozilla/5.0'}
 page = requests.get("https://www.metacritic.com/browse/games/score/metascore/all/ps4/filtered?view=detailed", headers= user_agent)
@@ -20,6 +20,9 @@ for descripcion in soup.find_all('div', {'class':'summary'}, limit=50):
     games['descripcion'].append(descripcion.text)
 for calificacion in soup.find_all('div', {'class':'metascore_w large game positive'}, limit=100):
     games['calificacion'].append(calificacion.text)
+for game in games['titulo']:
+    imagen = soup.find('img', {'alt': game})
+    games['imagen'].append(imagen["src"])
 
 linkDuracion = [27100, 4064, 66630, 20221, 38050, 41753, 15221, 5918, 20077, 4867, 21262, 30385, 10270, 39525, 12654, 52731, 40171, 42818, 21694, 38029, 57479, 3608, 20605, 31590, 19512, 12655, 3435, 52493, 22804, 10270, 57415, 61569, 52493, 40535, 38000, 26803, 57523, 12654, 869, 64753, 78213, 66595, 11627, 38001, 26784, 6064, 45392, 9782, 38029, 59820]
 
@@ -67,7 +70,7 @@ if __name__ == '__main__':
 
     elapsed_time = time() - start_time
 
-    for game in range(50):
+    """ for game in range(50):
         print(game + 1, "Título: ", games['titulo'][game])
         print("\n")
         print("Precio de Instant Gaming: ", games['precioGaming'][game])
@@ -75,6 +78,7 @@ if __name__ == '__main__':
         print("Precio de Ebay: ", games['precioEbay'][game])
         print("\n")
         imagen = soup.find('img', {'alt': games['titulo'][game]})
+        games['imagen'].append(imagen["src"])
         print("Imagen", imagen["src"])
         print("\n")
         print("Descripción:", games['descripcion'][game])
@@ -82,7 +86,9 @@ if __name__ == '__main__':
         print("Calificación", games['calificacion'][game+game])
         print("\n")
         print("Duración:", games['duracion'][game])
-        print("---------------------------------------------------------")
+        print("---------------------------------------------------------") """
 
     print("Elapsed time: %0.10f seconds." % elapsed_time)
 
+    with open('lista.json', 'w') as f:
+        json.dump(games, f)
